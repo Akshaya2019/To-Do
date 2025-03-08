@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+</head>
+<body>
+    <main>
+        <section id="view3" class="view3">
+            <form id="myForm">
+                <label for="myTextInput">Text Input</label>
+                <input type="text" id="myTextInput" autocomplete="off">
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+
+    <script>
+        document.addEventListener("readystatechange", (event)=>{
+            if(event.target.readyState === "complete"){
+                console.log("complete")
+                initApp();
+            }
+            const initApp = () => {
+                const view3 = document.querySelector("#view3");
+                const myForm = view3.querySelector("#myForm");
+                myForm.addEventListener("submit", (event)=> {
+                    event.preventDefault(); // if u click enter key it will not reload page.
+                    console.log("submit event")
+                })
+            }
+        })
+    </script>
+</body>
+</html>
