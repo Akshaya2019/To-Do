@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Click Me Game</title>
+    <style>
+        .output {
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+            margin: auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .box {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            background-color: red;
+            display: none;
+            cursor: pointer;
+        }
+        .message {
+            text-align: center;
+            padding: 10px;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="output"></div>
+    <div class="message"></div>
+    <script>
+        const output = document.querySelector(".output");
+        const message = document.querySelector(".message");
+        const box = document.createElement("div");
+        box.classList.add("box");
+        output.appendChild(box);
+        
+        let game = { start: null, timer: null };
+        message.textContent = "Press anywhere to start";
+
+        output.addEventListener("click", function(event) {
+            if (event.target !== box) {
+                startGame();
+            }
+        });
+
+        function randomNumber(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        function startGame() {
+            message.textContent = "Get ready...";
+            box.style.display = "none";
+            clearTimeout(game.timer);
+            game.timer = setTimeout(addBox, randomNumber(3000) + 1000);
+        }
+
+        box.addEventListener("click", function() {
+            let reactionTime = (new Date().getTime() - game.start) / 1000;
+            message.textContent = `Your time: ${reactionTime.toFixed(2)} seconds! Click anywhere to restart.`;
+            box.style.display = "none";
+        });
+
+        function addBox() {
+            message.textContent = "Click it!";
+            game.start = new Date().getTime();
+            box.style.left = randomNumber(450) + "px";
+            box.style.top = randomNumber(450) + "px";
+            box.style.display = "block";
+        }
+    </script>
+</body>
+</html>
