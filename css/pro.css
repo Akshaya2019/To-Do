@@ -1,0 +1,66 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav{
+    background-color: white;
+    height: 3rem;
+    display: grid;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.nav-center{
+    width: 90vw;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.nav-links li{
+    list-style-type: none;
+}
+.nav-links li a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: large;
+}
+main {
+    max-width: 1170px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    display: flex;
+    flex-direction: column; /* Stacks elements vertically */
+    justify-content: center; /* Centers vertically */
+    align-items: center; /* Centers horizontally */
+    height: 100vh; /* Full height of viewport (if needed) */
+    text-align: center; /* Ensures text stays centered */
+}
+.container h2{
+    background-color: black;
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+}
+.container h2 span{
+    color: blue;
+}
+.btn{
+    padding: 0.7rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.btn:hover{
+    background-color: black;
+    color: white;
+}
