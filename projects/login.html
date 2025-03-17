@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register & Login</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+p {
+    font-size: 14px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#reg-message, #login-message {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="register-box">
+            <h2>Register</h2>
+            <input type="text" id="reg-username" placeholder="Enter Username" required>
+            <input type="password" id="reg-password" placeholder="Enter Password" required>
+            <button onclick="register()">Register</button>
+            <p id="reg-message"></p>
+            <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+        </div>
+
+        <div id="login-box" style="display: none;">
+            <h2>Login</h2>
+            <input type="text" id="login-username" placeholder="Enter Username" required>
+            <input type="password" id="login-password" placeholder="Enter Password" required>
+            <button onclick="login()">Login</button>
+            <p id="login-message"></p>
+            <p>Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+        </div>
+    </div>
+
+    <script>
+        function register() {
+    const username = document.getElementById("reg-username").value;
+    const password = document.getElementById("reg-password").value;
+    const message = document.getElementById("reg-message");
+
+    if (username === "" || password === "") {
+        message.style.color = "red";
+        message.textContent = "Please fill all fields.";
+        return;
+    }
+
+    if (localStorage.getItem(username)) {
+        message.style.color = "red";
+        message.textContent = "Username already exists!";
+        return;
+    }
+
+    // Store user data in localStorage
+    localStorage.setItem(username, password);
+    message.style.color = "green";
+    message.textContent = "Registration successful! You can now log in.";
+
+    // Clear input fields
+    document.getElementById("reg-username").value = "";
+    document.getElementById("reg-password").value = "";
+}
+
+function login() {
+    const username = document.getElementById("login-username").value;
+    const password = document.getElementById("login-password").value;
+    const message = document.getElementById("login-message");
+
+    if (username === "" || password === "") {
+        message.style.color = "red";
+        message.textContent = "Please fill all fields.";
+        return;
+    }
+
+    // Check if the user exists
+    const storedPassword = localStorage.getItem(username);
+    if (storedPassword && storedPassword === password) {
+        message.style.color = "green";
+        message.textContent = "Login successful! Redirecting...";
+
+        setTimeout(() => {
+            window.location.href = "dashboard.html"; // Redirect to another page
+        }, 1500);
+    } else {
+        message.style.color = "red";
+        message.textContent = "Invalid username or password.";
+    }
+}
+
+// Show/hide login & register forms
+function showLogin() {
+    document.getElementById("register-box").style.display = "none";
+    document.getElementById("login-box").style.display = "block";
+}
+
+function showRegister() {
+    document.getElementById("login-box").style.display = "none";
+    document.getElementById("register-box").style.display = "block";
+}
+
+    </script>
+</body>
+</html>
