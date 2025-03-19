@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Your Cart</h1>
+    <nav>
+      <a href="product.html">Home</a>
+    </nav>
+  </header>
+  <main>
+    <div class="cart-container">
+      <table id="cart-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Cart items will be inserted here -->
+        </tbody>
+      </table>
+      <div class="cart-total">
+        <h3>Total: $<span id="total-amount">0</span></h3>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Get the cart from localStorage
+    function getCart() {
+      return JSON.parse(localStorage.getItem('cart')) || [];
+    }
+
+    // Save updated cart to localStorage
+    function setCart(cart) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    // Populate the cart table with items and calculate totals
+    function updateCartTable() {
+      const cart = getCart();
+      const tbody = document.querySelector('#cart-table tbody');
+      tbody.innerHTML = '';
+      let total = 0;
+
+      cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.name}</td>
+          <td>$${item.price}</td>
+          <td>
+            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+          </td>
+          <td>$<span id="subtotal-${item.id}">${subtotal}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('total-amount').textContent = total;
+    }
+
+    // Update the quantity for a specific product and refresh the table
+    function updateQuantity(id, newQuantity) {
+      let cart = getCart();
+      cart = cart.map(item => {
+        if (item.id === id) {
+          item.quantity = parseInt(newQuantity);
+        }
+        return item;
+      });
+      setCart(cart);
+      updateCartTable();
+    }
+
+    // Load the cart when the page is ready
+    updateCartTable();
+  </script>
+</body>
+</html>
