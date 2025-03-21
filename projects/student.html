@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+h1 {
+    color: #333;
+}
+
+.form input, .search input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #218838;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Student Management</h1>
+        
+        <div class="form">
+            <input type="text" id="name" placeholder="Enter Student Name">
+            <input type="text" id="department" placeholder="Enter Department">
+            <button onclick="addStudent()">Add Student</button>
+        </div>
+
+        <div class="search">
+            <input type="text" id="search" placeholder="Search by Name" onkeyup="filterStudents()">
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+            <tbody id="studentTable"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let students = [];
+
+function addStudent() {
+    let name = document.getElementById("name").value;
+    let department = document.getElementById("department").value;
+
+    if (name === "" || department === "") {
+        alert("Please enter both name and department.");
+        return;
+    }
+
+    students.push({ name, department });
+    document.getElementById("name").value = "";
+    document.getElementById("department").value = "";
+
+    displayStudents();
+}
+
+function displayStudents(filter = "") {
+    let table = document.getElementById("studentTable");
+    table.innerHTML = "";
+
+    students
+        .filter(student => student.name.toLowerCase().includes(filter.toLowerCase()))
+        .forEach(student => {
+            let row = `<tr>
+                        <td>${student.name}</td>
+                        <td>${student.department}</td>
+                    </tr>`;
+            table.innerHTML += row;
+        });
+}
+
+function filterStudents() {
+    let searchValue = document.getElementById("search").value;
+    displayStudents(searchValue);
+}
+
+    </script>
+</body>
+</html>
