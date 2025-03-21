@@ -9,11 +9,16 @@
 //Asynchronous Method
 console.log("First");
 //set timeout for 2 sec
-// setTimeout(()=> console.log("Second"),2000);
+//setTimeout(()=> console.log("Second"),2000);
 // console.log("Third")
 
 //callback- we don't use
 //refer freecodecamp
+
+function print(callback){
+    callback()
+}
+
 
 //Promises
 // 3 states: Pending, Fulfilled, Rejected
